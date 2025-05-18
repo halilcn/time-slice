@@ -8,14 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showTooltip = false
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("heyyy!")
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    withAnimation {
+                        showTooltip.toggle()
+                    }
+                }) {
+                    Image(systemName: "info.circle")
+                }
+                .popover(isPresented: $showTooltip, arrowEdge: .top) {
+                    Text("Dummy tooltip içeriği")
+                        .padding()
+                }
+            }
+        }
     }
 }
 
