@@ -24,6 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var popover: NSPopover!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Dock'ta görünmemesi için
+        NSApplication.shared.setActivationPolicy(.accessory)
+        
         // Menü bar iconu oluştur
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem?.button {
@@ -43,6 +46,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if popover.isShown {
                 popover.performClose(sender)
             } else {
+                // Her seferinde yeni bir PopoverContent oluştur
+                popover.contentViewController = NSHostingController(rootView: PopoverContent())
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 // Popover'ın window'unu key yap
                 popover.contentViewController?.view.window?.makeKey()
